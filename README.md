@@ -14,6 +14,13 @@ vagrant::plugin { 'vagrant-vmware-fusion':
 }
 ```
 
+```puppet
+vagrant::box { 'centos-63-x64':
+  ensure => present,
+  url    => 'http://puppet-vagrant-boxes.puppetlabs.com/centos-63-x64.box',
+}
+```
+
 ## Required Puppet Modules
 
 * `boxen`
