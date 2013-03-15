@@ -8,6 +8,12 @@ Install [Vagrant](http://www.vagrantup.com/) on your Mac.
 include vagrant
 ```
 
+```puppet
+vagrant::plugin { 'vagrant-vmware-fusion':
+  license => 'puppet:///modules/people/joe/fusion.lic',
+}
+```
+
 ## Required Puppet Modules
 
 * `boxen`
