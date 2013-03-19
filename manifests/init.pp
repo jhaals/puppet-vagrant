@@ -6,7 +6,14 @@
 
 class vagrant {
   package { 'Vagrant':
-    source   => 'http://files.vagrantup.com/packages/476b19a9e5f499b5d0b9d4aba5c0b16ebe434311/Vagrant.dmg',
+    source   => 'http://files.vagrantup.com/packages/67bd4d30f7dbefa7c0abc643599f0244986c38c8/Vagrant.dmg',
     provider => pkgdmg,
+  }
+
+  # For license files:
+  $libdir = "/Users/${::luser}/Library/Vagrant"
+
+  file { $libdir:
+    ensure => directory,
   }
 }
