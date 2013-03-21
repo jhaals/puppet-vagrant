@@ -14,7 +14,7 @@ vagrant::plugin { 'vagrant-vmware-fusion':
 }
 
 vagrant::box { 'squeeze64/vmware_fusion':
-  url => 'https://s3.amazonaws.com/github-ops/vagrant/squeeze64-6.0.7-vmware_fusion.box'
+  source => 'https://s3.amazonaws.com/github-ops/vagrant/squeeze64-6.0.7-vmware_fusion.box'
 }
 ```
 
