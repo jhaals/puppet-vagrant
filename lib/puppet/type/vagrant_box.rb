@@ -38,9 +38,14 @@ Puppet::Type.newtype :vagrant_box do
 
   autorequire :vagrant_plugin do
     Array.new.tap do |a|
-      vagrant_provider = self[:name].partition('/').first
-
-      a << vagrant_provider if vagrant_provider != 'virtualbox'
+      case vprovider = self[:name].partition('/').last
+      when 'virtualbox'
+        # built in
+      when 'vmware_fusion'
+        a << 'vagrant-vmware-fusion'
+      else
+        a << vprovider unless vprovider.nil?
+      end
     end
   end
 end
