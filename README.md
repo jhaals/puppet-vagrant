@@ -1,5 +1,7 @@
 # Vagrant Puppet Module for Boxen
 
+[![Build Status](https://travis-ci.org/boxen/puppet-vagrant.png?branch=master)](https://travis-ci.org/boxen/puppet-vagrant)
+
 Install [Vagrant](http://www.vagrantup.com/) on your Mac.
 
 ## Usage
