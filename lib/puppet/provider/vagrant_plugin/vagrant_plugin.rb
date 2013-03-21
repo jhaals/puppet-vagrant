@@ -52,7 +52,8 @@ Puppet::Type.type(:vagrant_plugin).provide :vagrant_plugin do
   private
   def custom_environment
     {
-      "HOME" => "/Users/#{Facter[:boxen_user].value}"
+      "HOME"         => "/Users/#{Facter[:boxen_user].value}",
+      "VAGRANT_HOME" => "/Users/#{Facter[:boxen_user].value}/.vagrant.d",
     }
   end
 

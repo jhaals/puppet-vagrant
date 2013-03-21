@@ -50,7 +50,6 @@ Puppet::Type.type(:vagrant_box).provide :vagrant_box do
     {
       "HOME"         => "/Users/#{Facter[:boxen_user].value}",
       "VAGRANT_HOME" => "/Users/#{Facter[:boxen_user].value}/.vagrant.d",
-      "VAGRANT_LOG"  => "debug"
     }
   end
 
