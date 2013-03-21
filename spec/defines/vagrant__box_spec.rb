@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe 'vagrant::box' do
   let(:title) { "squeeze64" }
+  let(:facts) { default_test_facts }
   let(:params) do
     {
       :source => "/foo/bar"

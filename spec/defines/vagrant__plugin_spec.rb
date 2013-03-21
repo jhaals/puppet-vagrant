@@ -1,9 +1,8 @@
 require 'spec_helper'
 
 describe 'vagrant::plugin' do
-  let(:facts) { default_test_facts }
-
   let(:title) { 'vagrant-vmware-fusion' }
+  let(:facts) { default_test_facts }
 
   it do
     should include_class('vagrant')

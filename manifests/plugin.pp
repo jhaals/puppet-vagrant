@@ -12,6 +12,7 @@ define vagrant::plugin(
   $license = undef,
 ) {
   include vagrant
+  include boxen::config
 
   if $name =~ /^vagrant-/ {
     $plugin_name = $name

@@ -11,6 +11,7 @@ define vagrant::box(
   $ensure = 'present',
 ) {
   include vagrant
+  include boxen::config
 
   vagrant_box { $name:
     ensure   => $ensure,
