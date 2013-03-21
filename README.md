@@ -1,23 +1,20 @@
 # Vagrant Puppet Module for Boxen
 
+[![Build Status](https://travis-ci.org/boxen/puppet-vagrant.png?branch=master)](https://travis-ci.org/boxen/puppet-vagrant)
+
 Install [Vagrant](http://www.vagrantup.com/) on your Mac.
 
 ## Usage
 
 ```puppet
 include vagrant
-```
 
-```puppet
 vagrant::plugin { 'vagrant-vmware-fusion':
-  license => 'puppet:///modules/people/joe/fusion.lic',
+  license => 'puppet:///modules/people/joe/licenses/fusion.lic',
 }
-```
 
-```puppet
-vagrant::box { 'centos-63-x64':
-  ensure => present,
-  url    => 'http://puppet-vagrant-boxes.puppetlabs.com/centos-63-x64.box',
+vagrant::box { 'squeeze64/vmware_fusion':
+  url => 'https://s3.amazonaws.com/github-ops/vagrant/squeeze64-6.0.7-vmware_fusion.box'
 }
 ```
 

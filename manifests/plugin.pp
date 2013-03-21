@@ -1,41 +1,35 @@
-# Public: Manage Vagrant Plugins
+# Public: Installs a vagrant plugin, with license support.
 #
-# Examples
+# Usage:
 #
-#   vagrant::plugins { 'vagrant-aws':
-#     ensure => present,
-#   }
+#   vagrant::plugin { 'vmware-fusion': license => 'puppet:///some/license' }
+#
+#   vagrant::plugin { 'boxen': ensure => absent }
 
-define vagrant::plugin (
-  $ensure  = present,
+define vagrant::plugin(
+  $ensure  = 'present',
+  $force   = false,
   $license = undef,
 ) {
-  require 'vagrant'
+  include vagrant
+  include boxen::config
 
-  if $ensure == present {
-    if $license {
-      $lic_file = "${name}.lic"
-
-      file { $lic_file:
-        path   => "${::vagrant::libdir}/${lic_file}",
-        source => $license,
-      }
-      exec { "vagrant_plugin_license_${name}":
-        command     => "vagrant plugin license ${name} ${::vagrant::libdir}/${lic_file}",
-        require     => File[$lic_file],
-        subscribe   => Exec["vagrant_plugin_install_${name}"],
-        refreshonly => true,
-      }
-    }
-
-    exec { "vagrant_plugin_install_${name}":
-      command => "vagrant plugin install ${name}",
-      unless  => "vagrant plugin list | grep ${name}",
-    }
+  if $name =~ /^vagrant-/ {
+    $plugin_name = $name
   } else {
-    exec { "vagrant_plugin_uninstall_${name}":
-      command => "vagrant plugin uninstall ${name}",
-      onlyif  => "vagrant plugin list | grep ${name}",
+    $plugin_name = "vagrant-${name}"
+  }
+
+  if $license {
+    file { "/Users/${::boxen_user}/.vagrant.d/license-${plugin_name}.lic":
+      ensure  => $ensure,
+      mode    => '0644',
+      source  => $license,
+      replace => $force
     }
+  }
+
+  vagrant_plugin { $plugin_name:
+    ensure => $ensure
   }
 }
