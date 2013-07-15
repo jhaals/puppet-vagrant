@@ -1,4 +1,4 @@
-# Public: Installs Vagrant 1.2.2
+# Public: Installs Vagrant 1.2.3
 #
 # Usage:
 #
@@ -7,7 +7,7 @@
 class vagrant {
   package { 'Vagrant':
     ensure   => installed,
-    source   => 'http://files.vagrantup.com/packages/7e400d00a3c5a0fdf2809c8b5001a035415a607b/Vagrant-1.2.2.dmg',
+    source   => 'http://files.vagrantup.com/packages/95d308caaecd139b8f62e41e7add0ec3f8ae3bd1/Vagrant-1.2.3.dmg',
     provider => 'pkgdmg'
   }
 
