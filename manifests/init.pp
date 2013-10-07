@@ -7,7 +7,7 @@
 class vagrant {
   package { 'Vagrant':
     ensure   => installed,
-    source   => 'http://files.vagrantup.com/packages/db8e7a9c79b23264da129f55cf8569167fc22415/Vagrant-1.3.3.dmg',
+    source   => 'http://files.vagrantup.com/packages/0ac2a87388419b989c3c0d0318cc97df3b0ed27d/Vagrant-1.3.4.dmg',
     provider => 'pkgdmg'
   }
 
