@@ -1,4 +1,4 @@
-# Public: Installs Vagrant 1.3.3
+# Public: Installs Vagrant 1.3.5
 #
 # Usage:
 #
