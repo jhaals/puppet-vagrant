@@ -4,6 +4,8 @@
 
 Install [Vagrant](http://www.vagrantup.com/) on your Mac.
 
+*Changes in release 3.0 and above: Vagrant will be upgraded when you change the version of this module in your Puppetfile*
+
 ## Usage
 
 ```puppet
