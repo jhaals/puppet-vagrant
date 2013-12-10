@@ -33,7 +33,7 @@ Puppet::Type.newtype :vagrant_box do
   end
 
   autorequire :package do
-    %w(Vagrant_1_3_5 vagrant)
+    %w(Vagrant_1_4_0 vagrant)
   end
 
   autorequire :vagrant_plugin do
