@@ -7,7 +7,7 @@
 class vagrant($version = '1.4.2') {
   package { "Vagrant_${version}":
     ensure   => installed,
-    source   => 'https://dl.bintray.com/mitchellh/vagrant/Vagrant-${version}.dmg',
+    source   => "https://dl.bintray.com/mitchellh/vagrant/Vagrant-${version}.dmg",
     provider => 'pkgdmg'
   }
 
