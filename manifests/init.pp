@@ -4,10 +4,10 @@
 #
 #   include vagrant
 
-class vagrant {
-  package { 'Vagrant_1_4_2':
+class vagrant($version = '1.4.2') {
+  package { "Vagrant_${version}":
     ensure   => installed,
-    source   => 'https://dl.bintray.com/mitchellh/vagrant/Vagrant-1.4.2.dmg',
+    source   => "https://dl.bintray.com/mitchellh/vagrant/Vagrant-${version}.dmg",
     provider => 'pkgdmg'
   }
 
