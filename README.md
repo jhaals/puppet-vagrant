@@ -27,12 +27,14 @@ To install a plugin, the usage would look as follows:
 vagrant::plugin { 'vagrant-vmware-fusion':
   license => 'puppet:///modules/people/joe/licenses/fusion.lic',
 }
+```
 
 Boxes
 --
 
 To install a box, the usage would look as follows:
 
+```puppet
 vagrant::box { 'squeeze64/vmware_fusion':
   source => 'https://s3.amazonaws.com/github-ops/vagrant/squeeze64-6.0.7-vmware_fusion.box'
 }
