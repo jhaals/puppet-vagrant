@@ -1,13 +1,13 @@
-# Public: Installs Vagrant 1.4.2
+# Public: Installs Vagrant 1.5.0
 #
 # Usage:
 #
 #   include vagrant
 
-class vagrant($version = '1.4.2') {
+class vagrant($version = '1.5.0') {
   package { "Vagrant_${version}":
     ensure   => installed,
-    source   => "https://dl.bintray.com/mitchellh/vagrant/Vagrant-${version}.dmg",
+    source   => "https://dl.bintray.com/mitchellh/vagrant/vagrant_${version}.dmg",
     provider => 'pkgdmg'
   }
 
