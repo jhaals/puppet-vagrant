@@ -11,7 +11,7 @@ define vagrant::plugin(
   $force   = false,
   $license = undef,
 ) {
-  include vagrant
+  require vagrant
   include boxen::config
 
   if $name =~ /^vagrant-/ {
