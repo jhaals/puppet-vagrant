@@ -10,7 +10,7 @@ define vagrant::box(
   $source,
   $ensure = 'present',
 ) {
-  include vagrant
+  require vagrant
   include boxen::config
 
   vagrant_box { $name:
