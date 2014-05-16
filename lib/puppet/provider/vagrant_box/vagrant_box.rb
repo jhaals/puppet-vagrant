@@ -33,7 +33,7 @@ Puppet::Type.type(:vagrant_box).provide :vagrant_box do
       name, vprovider = @resource[:name].split('/')
 
       boxes = vagrant "box", "list"
-      boxes =~ /^#{name}\s+\(#{vprovider}\)/
+      boxes =~ /^#{name}\s+\(#{vprovider}(, .+)?\)/
     end
   end
 
