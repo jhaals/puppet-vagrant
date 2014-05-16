@@ -32,8 +32,8 @@ Puppet::Type.type(:vagrant_box).provide :vagrant_box do
     else
       name, vprovider = @resource[:name].split('/')
 
-      File.directory? \
-        "/Users/#{Facter[:boxen_user].value}/.vagrant.d/boxes/#{name}/#{vprovider}"
+      boxes = vagrant "box", "list"
+      boxes =~ /^#{name}\s+\(#{vprovider}\)/
     end
   end
 
