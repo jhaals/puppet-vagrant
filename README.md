@@ -11,11 +11,11 @@ Install [Vagrant](http://www.vagrantup.com/) on your Mac.
 ```puppet
 include vagrant
 ```
-By default, the module will install Vagrant 1.6.2. You can specify a different version of Vagrant to install (minimum version is 1.4.0 due to download locations). To install Vagrant 1.4.0, you would specify the version as follows:
+By default, the module will install Vagrant 1.6.3. You can specify a different version of Vagrant to install (minimum version is 1.4.0 due to download locations). To install Vagrant 1.4.0, you would specify the version as follows:
 
 ```puppet
 class { 'vagrant':
-  version => '1.6.2'
+  version => '1.6.3'
 }
 ```
 
