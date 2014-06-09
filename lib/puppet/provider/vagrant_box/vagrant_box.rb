@@ -6,8 +6,7 @@ Puppet::Type.type(:vagrant_box).provide :vagrant_box do
   def create
     name, vprovider = @resource[:name].split('/')
 
-    cmd = [
-      "/usr/bin/vagrant",
+    args = [
       "box",
       "add",
       name,
@@ -16,22 +15,15 @@ Puppet::Type.type(:vagrant_box).provide :vagrant_box do
       vprovider
     ]
 
-    cmd << "--force" if @resource[:force]
+    args << "--force" if @resource[:force]
 
-    execute cmd, opts
+    vagrant(*args)
   end
 
   def destroy
     name, vprovider = @resource[:name].split('/')
 
-    cmd = [
-      "/usr/bin/vagrant",
-      "box",
-      "remove",
-      name,
-    ]
-
-    execute cmd, opts
+    vagrant "box", "remove", name, "--provider", vprovider
   end
 
   def exists?
@@ -40,8 +32,8 @@ Puppet::Type.type(:vagrant_box).provide :vagrant_box do
     else
       name, vprovider = @resource[:name].split('/')
 
-      File.directory? \
-        "/Users/#{Facter[:boxen_user].value}/.vagrant.d/boxes/#{name}/#{vprovider}"
+      boxes = vagrant "box", "list"
+      boxes =~ /^#{name}\s+\(#{vprovider}(, .+)?\)/
     end
   end
 
@@ -60,5 +52,10 @@ Puppet::Type.type(:vagrant_box).provide :vagrant_box do
       :failonfail         => true,
       :uid                => Facter[:boxen_user].value,
     }
+  end
+
+  def vagrant(*args)
+    cmd = ["/usr/bin/vagrant"] + args
+    execute cmd, opts
   end
 end

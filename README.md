@@ -9,9 +9,9 @@ Install [Vagrant](http://www.vagrantup.com/) on your Mac.
 ## Usage
 
 ```puppet
-include vagrant
+class { 'vagrant': }
 ```
-By default, the module will install Vagrant 1.5.0. You can specify a different version of Vagrant to install (minimum version is 1.4.0 due to download locations). To install Vagrant 1.4.0, you would specify the version as follows:
+By default, the module will install Vagrant 1.6.3. You can specify a different version of Vagrant to install (minimum version is 1.4.0 due to download locations). To install Vagrant 1.4.0, you would specify the version as follows:
 
 ```puppet
 class { 'vagrant':
@@ -40,6 +40,39 @@ vagrant::box { 'squeeze64/vmware_fusion':
 }
 ```
 
+Bash Completion
+--
+
+[Bash](https://www.gnu.org/software/bash/) supports tab-completion for commands, _i.e._ you can type part of a command, then press Tab, and Bash will attempt to determine what command you have begun typing and then complete the command for you.  By default, Bash can only complete commands by searching `$PATH`; to enable completion for commands that have subcommands (like `vagrant`), you need to add additional Bash configuration.
+
+To install this configuration automatically, invoke this class as follows:
+
+```puppet
+class { 'vagrant':
+  completion => true,
+}
+```
+
+This will install a [Homebrew](http://brew.sh/) package that provides the necessary configuration.  Once you have done so, **RESTART YOUR SHELL**, and then you'll be able to do something like the following:
+
+```console
+$ vagrant <TAB><TAB>
+box            docker-run     init           plugin         resume         ssh            up
+connect        global-status  list-commands  provision      rsync          ssh-config     version
+destroy        halt           login          rdp            rsync-auto     status
+docker-logs    help           package        reload         share          suspend
+$ vagrant bo<TAB>
+$ vagrant box <TAB><TAB>
+add        help       list       remove     repackage
+$ vagrant box li<TAB>
+$ vagrant box list <RETURN>
+puppetlabs/centos-6.5-64-puppet (vmware_desktop, 0.2.0)
+$
+```
+
 ## Required Puppet Modules
 
 * `boxen`
+* `homebrew`
+* `repository`
+* `stdlib`
