@@ -10,6 +10,7 @@ define vagrant::plugin(
   $ensure  = 'present',
   $force   = false,
   $license = undef,
+  $version = latest
 ) {
   require vagrant
 
@@ -29,6 +30,7 @@ define vagrant::plugin(
   }
 
   vagrant_plugin { $plugin_name:
-    ensure => $ensure
+    ensure  => $ensure,
+    version => $version
   }
 }

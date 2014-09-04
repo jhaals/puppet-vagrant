@@ -19,6 +19,19 @@ describe 'vagrant::plugin' do
     end
   end
 
+  context 'version specified' do
+    let(:title) { 'vagrant-berkshelf' }
+    let(:params) do
+      {
+        :version => '2.0.1'
+      }
+    end
+
+    it do
+      should contain_vagrant_plugin('vagrant-berkshelf').with_version('2.0.1')
+    end
+  end
+
   context 'with license' do
     let(:title) { 'vmware-fusion' }
 
