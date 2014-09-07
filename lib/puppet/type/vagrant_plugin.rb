@@ -24,6 +24,8 @@ Puppet::Type.newtype(:vagrant_plugin) do
     end
   end
 
+  newparam :version
+
   autorequire :package do
     %w(Vagrant_1_4_2 vagrant)
   end

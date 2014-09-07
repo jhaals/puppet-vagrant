@@ -29,6 +29,14 @@ vagrant::plugin { 'vagrant-vmware-fusion':
 }
 ```
 
+By default, the module will install the latest version of plugin. This behaviour can be overridden with the version paramter. The usage would look as follows:
+
+```puppet
+vagrant::plugin { 'vagrant-berkshelf':
+  version => '2.0.1'
+}
+```
+
 Boxes
 --
 

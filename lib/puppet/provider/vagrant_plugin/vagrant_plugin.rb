@@ -31,6 +31,8 @@ Puppet::Type.type(:vagrant_plugin).provide :vagrant_plugin do
       @resource[:name]
     ]
 
+    cmd << '--plugin-version' << @resource[:version] unless @resource[:version] == 'latest'
+
     execute cmd, opts
   end
 
