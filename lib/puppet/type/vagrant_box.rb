@@ -18,6 +18,10 @@ Puppet::Type.newtype :vagrant_box do
   newparam :source do
   end
 
+  newparam :user do
+    defaultto(Facter.value(:boxen_user) || 'root')
+  end
+
   newparam :force do
     validate do |value|
       unless value.is_a? Boolean
@@ -27,7 +31,9 @@ Puppet::Type.newtype :vagrant_box do
   end
 
   autorequire :package do
-    %w(Vagrant_1_4_2 vagrant)
+    catalog.resources.
+      find_all{|s| s.type == :package and s[:name] =~ /^[Vv]agrant/ }.
+      collect{|s| s[:name]}
   end
 
   autorequire :vagrant_plugin do

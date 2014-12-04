@@ -1,7 +1,6 @@
-require 'puppet/util/execution'
+require 'puppet/provider/vagrant'
 
-Puppet::Type.type(:vagrant_box).provide :vagrant_box do
-  include Puppet::Util::Execution
+Puppet::Type.type(:vagrant_box).provide(:vagrant_box, :parent => Puppet::Provider::Vagrant) do
 
   def create
     name, vprovider = @resource[:name].split('/')
@@ -22,7 +21,6 @@ Puppet::Type.type(:vagrant_box).provide :vagrant_box do
 
   def destroy
     name, vprovider = @resource[:name].split('/')
-
     vagrant "box", "remove", name, "--provider", vprovider
   end
 
@@ -35,27 +33,5 @@ Puppet::Type.type(:vagrant_box).provide :vagrant_box do
       boxes = vagrant "box", "list"
       boxes =~ /^#{name}\s+\(#{vprovider}(, .+)?\)/
     end
-  end
-
-  private
-  def custom_environment
-    {
-      "HOME"         => "/Users/#{Facter[:boxen_user].value}",
-      "VAGRANT_HOME" => "/Users/#{Facter[:boxen_user].value}/.vagrant.d",
-    }
-  end
-
-  def opts
-    {
-      :combine            => true,
-      :custom_environment => custom_environment,
-      :failonfail         => true,
-      :uid                => Facter[:boxen_user].value,
-    }
-  end
-
-  def vagrant(*args)
-    cmd = ["/usr/bin/vagrant"] + args
-    execute cmd, opts
   end
 end
