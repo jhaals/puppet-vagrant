@@ -1,69 +1,63 @@
 require 'json'
-require 'puppet/util/execution'
+require 'puppet/provider/vagrant'
 
-Puppet::Type.type(:vagrant_plugin).provide :vagrant_plugin do
-  include Puppet::Util::Execution
+Puppet::Type.type(:vagrant_plugin).provide(:vagrant_plugin, :parent => Puppet::Provider::Vagrant) do
+  def self.fetch_plugin_json(user_plugin_files)
+    result = Hash.new
 
-  def self.fetch_plugin_json
-    plugins = "/Users/#{Facter[:boxen_user].value}/.vagrant.d/plugins.json"
+    user_plugin_files.each do |user, plugin|
+      if File.exist? plugin
+        json = JSON.parse IO.read(plugin)
 
-    if File.exist? plugins
-      json = JSON.parse IO.read(plugins)
-
-      if json.has_key? "installed"
-        return json["installed"]
+        if json.has_key? "installed"
+          result[user] = json["installed"]
+        end
       end
     end
 
-    []
+    result
   end
 
-  def self.installed_plugins
-    @installed_plugins ||= fetch_plugin_json
+  def self.installed_plugins(user_plugin_json_files)
+    @installed_plugins ||= fetch_plugin_json(user_plugin_json_files)
   end
-
 
   def create
-    cmd = [
-      "/usr/bin/vagrant",
+    args = [
       "plugin",
       "install",
       @resource[:name]
     ]
 
-    cmd << '--plugin-version' << @resource[:version] unless @resource[:version] == 'latest'
+    args << '--plugin-version' << @resource[:version] if @resource[:version] and resource[:version] != 'latest'
 
-    execute cmd, opts
+    vagrant(*args)
   end
 
   def destroy
-    cmd = [
-      "/usr/bin/vagrant",
+    args = [
       "plugin",
       "uninstall",
       @resource[:name]
     ]
 
-    execute cmd, opts
+    vagrant(*args)
   end
 
   def exists?
-    self.class.installed_plugins.member? @resource[:name]
+    installed=self.class.installed_plugins(user_plugins_json_files)
+    installed.member? @resource[:user] and installed[@resource[:user]].member? @resource[:name]
   end
 
-  private
-  def custom_environment
-    {
-      "HOME"         => "/Users/#{Facter[:boxen_user].value}",
-      "VAGRANT_HOME" => "/Users/#{Facter[:boxen_user].value}/.vagrant.d",
-    }
-  end
+  # We do not have access to model.catalog in self.class
+  def user_plugins_json_files
+    users = model.catalog.resources.
+      find_all{|s| s.type==:vagrant_plugin}.
+      collect{|s| s[:user]}
 
-  def opts
-    {
-      :custom_environment => custom_environment,
-      :failonfail         => true,
-      :uid                => Facter[:boxen_user].value,
-    }
+    users.uniq.inject(Hash.new) do |result, user|
+      result[user] = "#{Etc.getpwnam(user).dir}/.vagrant.d/plugins.json"
+      result
+    end
   end
 end
