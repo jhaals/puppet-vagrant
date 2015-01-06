@@ -37,6 +37,20 @@ vagrant::plugin { 'vagrant-berkshelf':
 }
 ```
 
+By default, the module will prefix any plugin name that is missing the `vagrant-` prefix. e.g:
+
+```puppet
+vagrant::plugin { 'berkshelf': } # Resolves to vagrant-berkshelf
+```
+
+Some plugins such as [sahara](https://github.com/jedi4ever/sahara) do not use this prefix. You can override the automatic prefix behaviour with the prefix parameter. The usage would look as follows:
+
+```puppet
+vagrant::plugin { 'sahara':
+  prefix => false
+}
+```
+
 Boxes
 --
 
