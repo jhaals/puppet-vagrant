@@ -17,6 +17,18 @@ describe 'vagrant::plugin' do
     it do
       should contain_vagrant_plugin('vagrant-vmware-fusion')
     end
+
+    context 'prefix is false' do
+      let(:params) do
+        {
+          :prefix => false
+        }
+      end
+
+      it do
+        should contain_vagrant_plugin('vmware-fusion')
+      end
+    end
   end
 
   context 'version specified' do

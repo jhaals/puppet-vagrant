@@ -10,11 +10,12 @@ define vagrant::plugin(
   $ensure  = 'present',
   $force   = false,
   $license = undef,
-  $version = latest
+  $version = latest,
+  $prefix  = true
 ) {
   require vagrant
 
-  if $name =~ /^vagrant-/ {
+  if !$prefix or $name =~ /^vagrant-/ {
     $plugin_name = $name
   } else {
     $plugin_name = "vagrant-${name}"
