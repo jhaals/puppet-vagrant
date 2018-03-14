@@ -13,7 +13,7 @@ define vagrant::box(
   require vagrant
 
   vagrant_box { $name:
-    ensure   => $ensure,
-    source   => $source,
+    ensure => $ensure,
+    source => $source,
   }
 }
